@@ -3,52 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RZN | Connect</title>
+    <title>RZN | Подключение</title>
     <style>
-        body { background-color: #0a0a0a; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
-        .logo-box { width: 140px; height: 140px; margin-bottom: 20px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3); overflow: hidden; }
-        .logo-box img { width: 100%; height: auto; }
-        h1 { background: linear-gradient(90deg, #d4af37, #f2d06b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-container { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; margin-top: 20px; }
-        .btn { display: block; padding: 18px 0; text-decoration: none; border-radius: 12px; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-        .btn-tun { background: linear-gradient(45deg, #d4af37, #f2d06b); color: #000; }
-        .btn-happ { background: #fff; color: #000; }
-        .btn:active { transform: scale(0.95); }
-        #error-msg { color: #ff4444; font-size: 12px; margin-top: 10px; display: none; }
+        :root { --primary: #0088cc; --bg: #0a0a0a; --card: #141414; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg); 
+            color: white; 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh;
+        }
+        .container { 
+            text-align: center; 
+            background: var(--card); 
+            padding: 40px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 350px;
+            width: 90%;
+            border: 1px solid #222;
+        }
+        .logo { width: 80px; height: 80px; margin-bottom: 20px; border-radius: 20px; }
+        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 1px; }
+        p { color: #888; font-size: 14px; line-height: 1.5; }
+        
+        .btn { 
+            display: block; 
+            background: var(--primary); 
+            color: white; 
+            padding: 16px; 
+            margin-top: 30px; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: transform 0.2s, background 0.2s;
+        }
+        .btn:active { transform: scale(0.95); background: #0077b5; }
+
+        .loader {
+            width: 20px; height: 20px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .steps { margin-top: 30px; text-align: left; font-size: 13px; color: #666; }
+        .steps b { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <div class="logo-box"><img src="logo.png" alt="RZN"></div>
-    <h1>RZN Digital</h1>
-    <p id="status-text">Загрузка конфигурации...</p>
-
-    <div class="btn-container">
-        <a href="#" id="tun-link" class="btn btn-tun">🍏 Импорт в v2rayTun</a>
-        <a href="#" id="happ-link" class="btn btn-happ">⚡ Импорт в HAPP</a>
-    </div>
+<div class="container">
+    <img src="logo.png" alt="RZN" class="logo" onerror="this.style.display='none'">
+    <h1>RZN SERVICE</h1>
+    <p>Настраиваем безопасный доступ...</p>
     
-    <p id="error-msg">Ошибка: Ключ не найден. Перейдите в бот для получения доступа.</p>
+    <div class="loader" id="loader"></div>
 
-    <script>
-        // Функция для получения ключа из URL
-        function getConfig() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const key = urlParams.get('key'); // Ищем параметр ?key=
+    <a id="connectBtn" href="#" class="btn">🚀 ПОДКЛЮЧИТЬ СЕЙЧАС</a>
 
-            if (key) {
-                // Подставляем ключ в кнопки
-                document.getElementById('tun-link').href = "v2raytun://import/" + key;
-                document.getElementById('happ-link').href = "happ://add/" + key;
-                document.getElementById('status-text').innerText = "Конфигурация готова к импорту";
-            } else {
-                // Если ключа нет в ссылке
-                document.getElementById('status-text').style.display = 'none';
-                document.getElementById('error-msg').style.display = 'block';
-                document.querySelectorAll('.btn').forEach(b => b.style.opacity = '0.3');
-            }
-        }
-        window.onload = getConfig;
-    </script>
+    <div class="steps">
+        <div>1. Убедитесь, что <b>V2RayTun</b> установлен.</div>
+        <div>2. Нажмите синюю кнопку выше.</div>
+        <div>3. В приложении выберите <b>RZN</b> и нажмите "Connect".</div>
+    </div>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const subUrl = urlParams.get('sub');
+    const key = urlParams.get('key');
+
+    // Формируем ссылку для импорта
+    let finalLink = "";
+    if (subUrl) {
+        finalLink = "v2raytun://import/" + subUrl;
+    } else if (key) {
+        finalLink = key; // Если передали прямой vless://
+    }
+
+    if (finalLink) {
+        const btn = document.getElementById('connectBtn');
+        btn.href = finalLink;
+
+        // Авто-переход через 1.5 секунды, чтобы юзер успел увидеть лого
+        setTimeout(() => {
+            window.location.href = finalLink;
+            document.getElementById('loader').style.display = 'none';
+        }, 1500);
+    } else {
+        document.querySelector('p').innerText = "Ошибка: Данные не найдены";
+        document.getElementById('loader').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
