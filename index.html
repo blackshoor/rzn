@@ -5,74 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZN | Подключение</title>
     <style>
-        :root { --primary: #0088cc; --bg: #0a0a0a; --card: #141414; }
+        :root { --primary: #0088cc; --bg: #000000; --card: #0d0d0d; }
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', -apple-system, sans-serif; 
             background-color: var(--bg); 
             color: white; 
             margin: 0; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 100vh;
+            min-height: 100vh;
         }
         .container { 
             text-align: center; 
             background: var(--card); 
-            padding: 40px 30px; 
-            border-radius: 24px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            max-width: 350px;
+            padding: 60px 40px; 
+            border-radius: 40px; 
+            box-shadow: 0 0 80px rgba(0, 136, 204, 0.15);
+            max-width: 400px;
             width: 90%;
-            border: 1px solid #222;
+            border: 1px solid #1a1a1a;
         }
-        .logo { width: 80px; height: 80px; margin-bottom: 20px; border-radius: 20px; }
-        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 1px; }
-        p { color: #888; font-size: 14px; line-height: 1.5; }
+        
+        /* КРУПНЫЙ ЛОГОТИП */
+        .logo { 
+            width: 180px; 
+            height: 180px; 
+            margin-bottom: 30px; 
+            border-radius: 35px; 
+            object-fit: cover;
+            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.4);
+            border: 2px solid #1a1a1a;
+        }
+
+        h1 { font-size: 32px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; color: #fff; }
+        p { color: #888; font-size: 16px; margin-bottom: 25px; }
         
         .btn { 
             display: block; 
             background: var(--primary); 
             color: white; 
-            padding: 16px; 
-            margin-top: 30px; 
-            border-radius: 12px; 
+            padding: 20px; 
+            border-radius: 18px; 
             text-decoration: none; 
-            font-weight: bold; 
-            transition: transform 0.2s, background 0.2s;
+            font-weight: 800; 
+            font-size: 18px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
         }
-        .btn:active { transform: scale(0.95); background: #0077b5; }
+        .btn:active { transform: scale(0.94); background: #0077b5; }
 
         .loader {
-            width: 20px; height: 20px;
-            border: 3px solid rgba(255,255,255,0.1);
+            width: 30px; height: 30px;
+            border: 3px solid rgba(255,255,255,0.05);
             border-top: 3px solid var(--primary);
             border-radius: 50%;
             display: inline-block;
-            animation: spin 1s linear infinite;
-            margin-top: 20px;
+            animation: spin 0.8s linear infinite;
+            margin: 25px 0;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .steps { margin-top: 30px; text-align: left; font-size: 13px; color: #666; }
+        .steps { 
+            margin-top: 40px; 
+            text-align: left; 
+            font-size: 14px; 
+            color: #444; 
+            border-top: 1px solid #1a1a1a; 
+            padding-top: 25px; 
+        }
+        .steps div { margin-bottom: 10px; line-height: 1.4; }
         .steps b { color: var(--primary); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="RZN" class="logo" onerror="this.style.display='none'">
+    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/180?text=RZN'">
     <h1>RZN SERVICE</h1>
-    <p>Настраиваем безопасный доступ...</p>
+    <p>Настройка защищенного доступа</p>
     
     <div class="loader" id="loader"></div>
 
-    <a id="connectBtn" href="#" class="btn">🚀 ПОДКЛЮЧИТЬ СЕЙЧАС</a>
+    <a id="connectBtn" href="#" class="btn">🚀 ПОДКЛЮЧИТЬ</a>
 
     <div class="steps">
-        <div>1. Убедитесь, что <b>V2RayTun</b> установлен.</div>
-        <div>2. Нажмите синюю кнопку выше.</div>
-        <div>3. В приложении выберите <b>RZN</b> и нажмите "Connect".</div>
+        <div>• Нажмите <b>ПОДКЛЮЧИТЬ</b> для импорта.</div>
+        <div>• В приложении выберите сервер <b>RZN</b>.</div>
+        <div>• Нажмите <b>Connect</b> для старта.</div>
     </div>
 </div>
 
@@ -81,25 +101,21 @@
     const subUrl = urlParams.get('sub');
     const key = urlParams.get('key');
 
-    // Формируем ссылку для импорта
     let finalLink = "";
     if (subUrl) {
         finalLink = "v2raytun://import/" + subUrl;
     } else if (key) {
-        finalLink = key; // Если передали прямой vless://
+        finalLink = key; 
     }
 
     if (finalLink) {
-        const btn = document.getElementById('connectBtn');
-        btn.href = finalLink;
-
-        // Авто-переход через 1.5 секунды, чтобы юзер успел увидеть лого
+        document.getElementById('connectBtn').href = finalLink;
         setTimeout(() => {
             window.location.href = finalLink;
-            document.getElementById('loader').style.display = 'none';
-        }, 1500);
+            document.getElementById('loader').style.opacity = '0.3';
+        }, 1200);
     } else {
-        document.querySelector('p').innerText = "Ошибка: Данные не найдены";
+        document.querySelector('p').innerText = "Ошибка: данные не переданы";
         document.getElementById('loader').style.display = 'none';
     }
 </script>
