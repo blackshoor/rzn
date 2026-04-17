@@ -55,11 +55,22 @@
             box-sizing: border-box;
         }
         .btn-v2ray { background: var(--primary); }
-        .btn-happ { background: var(--happ); } /* Оранжевый стиль для HAPP */
+        .btn-happ { background: var(--happ); }
         .btn:active { transform: scale(0.97); opacity: 0.8; }
 
+        /* Стиль для ссылки на оферту */
+        .oferta-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #555;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+        }
+        .oferta-link:hover { color: #888; text-decoration: underline; }
+
         .store-section {
-            margin-top: 30px;
+            margin-top: 25px;
             padding-top: 20px;
             border-top: 1px solid #222;
             display: none;
@@ -99,6 +110,8 @@
     <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 Добавить в V2RayTun</a>
     <a id="happBtn" href="#" class="btn btn-happ">📱 Добавить в HAPP Proxy</a>
 
+    <a href="oferta.html" class="oferta-link">Прочитать договор оферты</a>
+
     <div id="storeSection" class="store-section">
         <div class="store-title">Если приложение не установлено:</div>
         <div class="store-links" id="storeLinks"></div>
@@ -113,7 +126,6 @@
     const sub = params.get('sub');
 
     if (sub) {
-        // Установка протоколов для импорта
         document.getElementById('v2Btn').href = "v2raytun://import/" + sub;
         document.getElementById('happBtn').href = "happ://add/" + sub; 
     } else {
@@ -122,22 +134,18 @@
         document.getElementById('happBtn').style.display = 'none';
     }
 
-    // Детектор ОС и ссылки на маркеты
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const storeSection = document.getElementById('storeSection');
     const storeLinks = document.getElementById('storeLinks');
 
-    // Показываем ссылки на установку через 2 секунды
     setTimeout(() => { storeSection.style.display = 'block'; }, 2000);
 
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        // Ссылки для iOS
         storeLinks.innerHTML = `
             <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn" target="_blank">App Store (V2)</a>
             <a href="https://apps.apple.com/ru/app/happ-proxy/id6474143422" class="store-btn" target="_blank">App Store (HAPP)</a>
         `;
     } else {
-        // Ссылки для Android (HAPP обычно ставится через APK или Play Store, если доступен)
         storeLinks.innerHTML = `
             <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn" target="_blank">Google Play (V2)</a>
             <a href="https://play.google.com/store/apps/details?id=com.happ.proxy" class="store-btn" target="_blank">Google Play (HAPP)</a>
