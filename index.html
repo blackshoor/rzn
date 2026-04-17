@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZN | Подключение</title>
     <style>
-        :root { --primary: #0088cc; --bg: #000000; --card: #0d0d0d; }
+        :root { --primary: #0088cc; --hiddify: #9a33ff; --bg: #000000; --card: #0d0d0d; }
         body { 
             font-family: 'Segoe UI', -apple-system, sans-serif; 
             background-color: var(--bg); 
@@ -19,103 +19,98 @@
         .container { 
             text-align: center; 
             background: var(--card); 
-            padding: 60px 40px; 
+            padding: 50px 30px; 
             border-radius: 40px; 
-            box-shadow: 0 0 80px rgba(0, 136, 204, 0.15);
+            box-shadow: 0 0 80px rgba(0, 136, 204, 0.1);
             max-width: 400px;
             width: 90%;
             border: 1px solid #1a1a1a;
         }
         
-        /* КРУПНЫЙ ЛОГОТИП */
         .logo { 
             width: 180px; 
             height: 180px; 
-            margin-bottom: 30px; 
-            border-radius: 35px; 
+            margin-bottom: 25px; 
+            border-radius: 40px; 
             object-fit: cover;
-            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.4);
-            border: 2px solid #1a1a1a;
+            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.3);
         }
 
-        h1 { font-size: 32px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; color: #fff; }
-        p { color: #888; font-size: 16px; margin-bottom: 25px; }
+        h1 { font-size: 28px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; }
+        p { color: #888; font-size: 15px; margin-bottom: 30px; }
         
         .btn { 
-            display: block; 
-            background: var(--primary); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white; 
-            padding: 20px; 
-            border-radius: 18px; 
+            padding: 18px; 
+            border-radius: 16px; 
             text-decoration: none; 
             font-weight: 800; 
-            font-size: 18px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 16px;
+            transition: all 0.3s ease;
             text-transform: uppercase;
+            margin-bottom: 12px;
         }
-        .btn:active { transform: scale(0.94); background: #0077b5; }
+
+        /* Кнопка V2RayTun */
+        .btn-v2ray { background: var(--primary); }
+        .btn-v2ray:active { transform: scale(0.95); background: #0077b5; }
+
+        /* Кнопка Hiddify (HAPP) */
+        .btn-hiddify { background: var(--hiddify); }
+        .btn-hiddify:active { transform: scale(0.95); background: #7a28cc; }
 
         .loader {
-            width: 30px; height: 30px;
+            width: 24px; height: 24px;
             border: 3px solid rgba(255,255,255,0.05);
             border-top: 3px solid var(--primary);
             border-radius: 50%;
             display: inline-block;
             animation: spin 0.8s linear infinite;
-            margin: 25px 0;
+            margin-bottom: 20px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .steps { 
-            margin-top: 40px; 
-            text-align: left; 
-            font-size: 14px; 
-            color: #444; 
-            border-top: 1px solid #1a1a1a; 
-            padding-top: 25px; 
-        }
-        .steps div { margin-bottom: 10px; line-height: 1.4; }
-        .steps b { color: var(--primary); }
+        .footer-text { font-size: 12px; color: #444; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/180?text=RZN'">
+    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/180/000000/0088cc?text=RZN'">
     <h1>RZN SERVICE</h1>
-    <p>Настройка защищенного доступа</p>
+    <p>Выберите приложение для импорта</p>
     
     <div class="loader" id="loader"></div>
 
-    <a id="connectBtn" href="#" class="btn">🚀 ПОДКЛЮЧИТЬ</a>
+    <a id="v2rayBtn" href="#" class="btn btn-v2ray">🚀 В2РЕЙ ТЮН (V2RayTun)</a>
 
-    <div class="steps">
-        <div>• Нажмите <b>ПОДКЛЮЧИТЬ</b> для импорта.</div>
-        <div>• В приложении выберите сервер <b>RZN</b>.</div>
-        <div>• Нажмите <b>Connect</b> для старта.</div>
-    </div>
+    <a id="hiddifyBtn" href="#" class="btn btn-hiddify">📱 ХАПП (Hiddify)</a>
+
+    <div class="footer-text">Нажмите на кнопку вашего приложения</div>
 </div>
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const subUrl = urlParams.get('sub');
-    const key = urlParams.get('key');
 
-    let finalLink = "";
     if (subUrl) {
-        finalLink = "v2raytun://import/" + subUrl;
-    } else if (key) {
-        finalLink = key; 
-    }
+        // Ссылка для V2RayTun
+        const v2rayLink = "v2raytun://import/" + subUrl;
+        document.getElementById('v2rayBtn').href = v2rayLink;
 
-    if (finalLink) {
-        document.getElementById('connectBtn').href = finalLink;
+        // Ссылка для Hiddify (HAPP) - используем hiddify:// протокол
+        const hiddifyLink = "hiddify://import/" + subUrl;
+        document.getElementById('hiddifyBtn').href = hiddifyLink;
+
+        // Авто-попытка открыть в V2RayTun через 2 секунды (можно убрать, если хочешь только кнопки)
         setTimeout(() => {
-            window.location.href = finalLink;
-            document.getElementById('loader').style.opacity = '0.3';
-        }, 1200);
+            document.getElementById('loader').style.display = 'none';
+        }, 2000);
     } else {
-        document.querySelector('p').innerText = "Ошибка: данные не переданы";
+        document.querySelector('p').innerText = "Ошибка: данные не получены";
         document.getElementById('loader').style.display = 'none';
     }
 </script>
