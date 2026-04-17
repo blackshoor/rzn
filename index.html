@@ -5,33 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZN | Личный ИТ-сервис</title>
     <style>
-        body { background-color: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
-        .logo { width: 150px; border-radius: 20px; }
-        h1 { color: #d4af37; margin-top: 20px; } /* Золотой цвет как на логотипе */
-        .btn {
+        /* Основной фон и шрифты */
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Контейнер для логотипа */
+        .logo-box {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 25px;
+            background: linear-gradient(145deg, #141414, #050505);
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.1);
+            overflow: hidden;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Заголовок с золотым градиентом */
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #d4af37, #f2d06b, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Описание */
+        p {
+            font-size: 15px;
+            color: #999;
+            max-width: 280px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Кнопка импорта */
+        .btn-import {
             display: inline-block;
+            width: 100%;
+            max-width: 280px;
+            padding: 18px 0;
             background: linear-gradient(45deg, #d4af37, #f2d06b);
             color: #000;
-            padding: 15px 30px;
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
         }
-        .footer { margin-top: 50px; font-size: 0.8em; color: #666; }
+
+        .btn-import:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-import:active {
+            transform: translateY(0);
+        }
+
+        /* Футер для соблюдения правил (ЮKassa) */
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .footer a {
+            color: #666;
+            text-decoration: none;
+            border-bottom: 1px solid #333;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #d4af37;
+        }
     </style>
 </head>
 <body>
-    <img src="https://ваш-телеграм-бот.рф/logo.png" class="logo" alt="RZN Logo">
-    <h1>RZN Personal Service</h1>
-    <p>Нажмите кнопку ниже для автоматического импорта конфигурации в приложение v2rayTun</p>
-    
-    <a href="v2raytun://import/vless://ВАШ_КЛЮЧ_ТУТ" class="btn">🚀 ПОДКЛЮЧИТЬ RZN</a>
+
+    <div class="logo-box">
+        <img src="logo.png" alt="RZN">
+    </div>
+
+    <h1>RZN Digital</h1>
+    <p>Нажмите на кнопку ниже, чтобы автоматически добавить настройки в приложение <b>v2rayTun</b></p>
+
+    <a href="v2raytun://import/vless://ВАШ_UUID@ВАШ_IP:443?security=reality&sni=google.com&fp=chrome&pbk=ВАШ_КЛЮЧ&sid=ВАШ_ID&type=grpc&serviceName=grpc#RZN_Service" class="btn-import">
+        📥 Настроить в 1 клик
+    </a>
 
     <div class="footer">
-        <p>© 2026 RZN Digital. Все права защищены.<br>
-        <a href="oferta.html" style="color: #666;">Публичная оферта</a></p>
+        © 2026 RZN Personal IT Service<br>
+        <a href="oferta.html">Условия использования и оферта</a>
     </div>
+
 </body>
 </html>
