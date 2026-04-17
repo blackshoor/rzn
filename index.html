@@ -50,6 +50,9 @@
             transition: all 0.2s ease;
             text-transform: uppercase;
             margin-bottom: 12px;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
         }
         .btn-v2ray { background: var(--primary); }
         .btn-hiddify { background: var(--hiddify); }
@@ -59,7 +62,7 @@
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #222;
-            display: none; /* Скрыто по умолчанию, покажем через JS */
+            display: none;
         }
         .store-title { font-size: 13px; color: #666; margin-bottom: 15px; text-transform: uppercase; }
         .store-links { display: flex; justify-content: space-around; gap: 10px; }
@@ -89,60 +92,51 @@
 <div class="container">
     <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/140/0088cc/ffffff?text=RZN'">
     <h1>ПОДКЛЮЧЕНИЕ</h1>
-    <p id="main-desc">Выберите приложение для автоматического добавления конфигурации</p>
+    <p id="main-desc">Выберите приложение для настройки</p>
     
     <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 Добавить в V2RayTun</a>
-    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Добавить в Hiddify</a>
+    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Добавить в HAPP (Hiddify)</a>
 
     <div id="storeSection" class="store-section">
         <div class="store-title">Нет приложения? Установите:</div>
-        <div class="store-links" id="storeLinks">
-            </div>
+        <div class="store-links" id="storeLinks"></div>
         <span class="retry-btn" onclick="location.reload()">Попробовать снова</span>
     </div>
 
-    <div class="footer">Тех. поддержка: <b>@sasha_big_boss</b></div>
+    <div class="footer">Поддержка: <b>@sasha_big_boss</b></div>
 </div>
 
 <script>
     const params = new URLSearchParams(window.location.search);
     const sub = params.get('sub');
 
-    // Настройка ссылок импорта
     if (sub) {
+        // ИСПРАВЛЕННЫЕ ПРОТОКОЛЫ
         document.getElementById('v2Btn').href = "v2raytun://import/" + sub;
-        document.getElementById('hiBtn').href = "hiddify://import/" + sub;
+        document.getElementById('hiBtn').href = "happ://add/" + sub; 
     } else {
         document.getElementById('main-desc').innerText = "Ошибка: ссылка не найдена";
         document.getElementById('v2Btn').style.display = 'none';
         document.getElementById('hiBtn').style.display = 'none';
     }
 
-    // Определение ОС и показ ссылок на Маркеты
+    // Определение ОС
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const storeSection = document.getElementById('storeSection');
     const storeLinks = document.getElementById('storeLinks');
 
-    // Показываем блок с маркетами через небольшую задержку
-    setTimeout(() => {
-        storeSection.style.display = 'block';
-    }, 1000);
+    setTimeout(() => { storeSection.style.display = 'block'; }, 1500);
 
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        // iOS Ссылки
         storeLinks.innerHTML = `
-            <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn" target="_blank">App Store (V2)</a>
-            <a href="https://apps.apple.com/ru/app/hiddify/id6473773752" class="store-btn" target="_blank">App Store (Hi)</a>
-        `;
-    } else if (/android/i.test(userAgent)) {
-        // Android Ссылки
-        storeLinks.innerHTML = `
-            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn" target="_blank">Google Play (V2)</a>
-            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="store-btn" target="_blank">Google Play (Hi)</a>
+            <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn">App Store (V2)</a>
+            <a href="https://apps.apple.com/ru/app/hiddify/id6473773752" class="store-btn">App Store (Hi)</a>
         `;
     } else {
-        // Десктоп или другое
-        storeLinks.innerHTML = `<span>Пожалуйста, откройте ссылку с телефона</span>`;
+        storeLinks.innerHTML = `
+            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn">Google Play (V2)</a>
+            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="store-btn">Google Play (Hi)</a>
+        `;
     }
 </script>
 
