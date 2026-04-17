@@ -21,7 +21,7 @@
             background: var(--card); 
             padding: 50px 30px; 
             border-radius: 40px; 
-            box-shadow: 0 0 80px rgba(0, 136, 204, 0.1);
+            box-shadow: 0 0 80px rgba(0, 136, 204, 0.15);
             max-width: 400px;
             width: 90%;
             border: 1px solid #1a1a1a;
@@ -33,47 +33,35 @@
             margin-bottom: 25px; 
             border-radius: 40px; 
             object-fit: cover;
-            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.3);
+            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.4);
+            border: 1px solid #222;
         }
 
-        h1 { font-size: 28px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; }
-        p { color: #888; font-size: 15px; margin-bottom: 30px; }
+        h1 { font-size: 28px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; text-transform: uppercase; }
+        p { color: #888; font-size: 15px; margin-bottom: 35px; line-height: 1.4; }
         
         .btn { 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             color: white; 
-            padding: 18px; 
-            border-radius: 16px; 
+            padding: 20px; 
+            border-radius: 18px; 
             text-decoration: none; 
             font-weight: 800; 
             font-size: 16px;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
-        /* Кнопка V2RayTun */
         .btn-v2ray { background: var(--primary); }
-        .btn-v2ray:active { transform: scale(0.95); background: #0077b5; }
+        .btn-v2ray:hover { background: #0099ee; box-shadow: 0 0 20px rgba(0, 136, 204, 0.4); }
 
-        /* Кнопка Hiddify (HAPP) */
         .btn-hiddify { background: var(--hiddify); }
-        .btn-hiddify:active { transform: scale(0.95); background: #7a28cc; }
+        .btn-hiddify:hover { background: #ab47ff; box-shadow: 0 0 20px rgba(154, 51, 255, 0.4); }
 
-        .loader {
-            width: 24px; height: 24px;
-            border: 3px solid rgba(255,255,255,0.05);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            display: inline-block;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .btn:active { transform: scale(0.95); }
 
-        .footer-text { font-size: 12px; color: #444; margin-top: 20px; }
+        .footer-text { font-size: 13px; color: #444; margin-top: 25px; border-top: 1px solid #1a1a1a; padding-top: 20px; }
     </style>
 </head>
 <body>
@@ -81,15 +69,14 @@
 <div class="container">
     <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/180/000000/0088cc?text=RZN'">
     <h1>RZN SERVICE</h1>
-    <p>Выберите приложение для импорта</p>
+    <p>Выберите приложение для автоматического импорта настроек</p>
     
-    <div class="loader" id="loader"></div>
+    <a id="v2rayBtn" href="#" class="btn btn-v2ray">🚀 V2RayTun (В2РЕЙ)</a>
+    <a id="hiddifyBtn" href="#" class="btn btn-hiddify">📱 Hiddify (ХАПП)</a>
 
-    <a id="v2rayBtn" href="#" class="btn btn-v2ray">🚀 В2РЕЙ ТЮН (V2RayTun)</a>
-
-    <a id="hiddifyBtn" href="#" class="btn btn-hiddify">📱 ХАПП (Hiddify)</a>
-
-    <div class="footer-text">Нажмите на кнопку вашего приложения</div>
+    <div class="footer-text">
+        Нужна помощь? <br> Пишите в поддержку: <b>@sasha_big_boss</b>
+    </div>
 </div>
 
 <script>
@@ -97,21 +84,13 @@
     const subUrl = urlParams.get('sub');
 
     if (subUrl) {
-        // Ссылка для V2RayTun
-        const v2rayLink = "v2raytun://import/" + subUrl;
-        document.getElementById('v2rayBtn').href = v2rayLink;
-
-        // Ссылка для Hiddify (HAPP) - используем hiddify:// протокол
-        const hiddifyLink = "hiddify://import/" + subUrl;
-        document.getElementById('hiddifyBtn').href = hiddifyLink;
-
-        // Авто-попытка открыть в V2RayTun через 2 секунды (можно убрать, если хочешь только кнопки)
-        setTimeout(() => {
-            document.getElementById('loader').style.display = 'none';
-        }, 2000);
+        // Формируем ссылки для обоих приложений
+        document.getElementById('v2rayBtn').href = "v2raytun://import/" + subUrl;
+        document.getElementById('hiddifyBtn').href = "hiddify://import/" + subUrl;
     } else {
-        document.querySelector('p').innerText = "Ошибка: данные не получены";
-        document.getElementById('loader').style.display = 'none';
+        document.querySelector('p').innerText = "Ошибка: Ссылка на подписку не найдена. Перейдите из бота.";
+        document.getElementById('v2rayBtn').style.display = 'none';
+        document.getElementById('hiddifyBtn').style.display = 'none';
     }
 </script>
 
