@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZN | Личный ИТ-сервис</title>
     <style>
-        /* Основной фон и шрифты */
         body {
             background-color: #0a0a0a;
             color: #ffffff;
@@ -20,18 +19,17 @@
             text-align: center;
         }
 
-        /* Контейнер для логотипа */
         .logo-box {
-            width: 160px;
-            height: 160px;
-            margin-bottom: 25px;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 20px;
             background: linear-gradient(145deg, #141414, #050505);
-            border-radius: 35px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
 
@@ -41,10 +39,8 @@
             object-fit: cover;
         }
 
-        /* Заголовок с золотым градиентом */
         h1 {
-            font-size: 26px;
-            font-weight: 700;
+            font-size: 24px;
             letter-spacing: 1.5px;
             margin: 0 0 10px 0;
             text-transform: uppercase;
@@ -53,57 +49,60 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Описание */
         p {
-            font-size: 15px;
-            color: #999;
-            max-width: 280px;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-size: 14px;
+            color: #888;
+            max-width: 300px;
+            margin-bottom: 25px;
         }
 
-        /* Кнопка импорта */
-        .btn-import {
-            display: inline-block;
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             width: 100%;
-            max-width: 280px;
-            padding: 18px 0;
-            background: linear-gradient(45deg, #d4af37, #f2d06b);
-            color: #000;
+            max-width: 300px;
+        }
+
+        .btn {
+            display: block;
+            padding: 16px 0;
             text-decoration: none;
-            border-radius: 15px;
-            font-weight: 800;
-            font-size: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
             text-transform: uppercase;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
         }
 
-        .btn-import:hover {
+        /* Кнопка v2rayTun */
+        .btn-tun {
+            background: linear-gradient(45deg, #d4af37, #f2d06b);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Кнопка HAPP */
+        .btn-happ {
+            background: transparent;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+        }
+
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.1);
         }
 
-        .btn-import:active {
-            transform: translateY(0);
-        }
-
-        /* Футер для соблюдения правил (ЮKassa) */
         .footer {
-            margin-top: 50px;
-            font-size: 12px;
+            margin-top: 40px;
+            font-size: 11px;
             color: #444;
         }
 
         .footer a {
             color: #666;
             text-decoration: none;
-            border-bottom: 1px solid #333;
-            transition: color 0.2s;
-        }
-
-        .footer a:hover {
-            color: #d4af37;
         }
     </style>
 </head>
@@ -114,15 +113,21 @@
     </div>
 
     <h1>RZN Digital</h1>
-    <p>Нажмите на кнопку ниже, чтобы автоматически добавить настройки в приложение <b>v2rayTun</b></p>
+    <p>Выберите приложение для автоматического импорта конфигурации</p>
 
-    <a href="v2raytun://import/vless://ВАШ_UUID@ВАШ_IP:443?security=reality&sni=google.com&fp=chrome&pbk=ВАШ_КЛЮЧ&sid=ВАШ_ID&type=grpc&serviceName=grpc#RZN_Service" class="btn-import">
-        📥 Настроить в 1 клик
-    </a>
+    <div class="btn-container">
+        <a href="v2raytun://import/ВАШ_VLESS_КЛЮЧ" class="btn btn-tun">
+            🍏 Импорт в v2rayTun
+        </a>
+
+        <a href="happ://import/ВАШ_VLESS_КЛЮЧ" class="btn btn-happ">
+            ⚡ Импорт в HAPP
+        </a>
+    </div>
 
     <div class="footer">
         © 2026 RZN Personal IT Service<br>
-        <a href="oferta.html">Условия использования и оферта</a>
+        <a href="oferta.html">Пользовательское соглашение и оферта</a>
     </div>
 
 </body>
