@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RZN | Подключение</title>
+    <title>RZN | Выбор приложения</title>
     <style>
-        :root { --primary: #0088cc; --hiddify: #9a33ff; --bg: #000000; --card: #0d0d0d; }
+        :root { --primary: #0088cc; --hiddify: #9a33ff; --bg: #000000; --card: #111111; }
         body { 
             font-family: 'Segoe UI', -apple-system, sans-serif; 
             background-color: var(--bg); 
@@ -21,77 +21,75 @@
             background: var(--card); 
             padding: 50px 30px; 
             border-radius: 40px; 
-            box-shadow: 0 0 80px rgba(0, 136, 204, 0.15);
-            max-width: 400px;
+            box-shadow: 0 10px 50px rgba(0, 136, 204, 0.2);
+            max-width: 380px;
             width: 90%;
-            border: 1px solid #1a1a1a;
-        }
-        
-        .logo { 
-            width: 180px; 
-            height: 180px; 
-            margin-bottom: 25px; 
-            border-radius: 40px; 
-            object-fit: cover;
-            box-shadow: 0 15px 45px rgba(0, 136, 204, 0.4);
             border: 1px solid #222;
         }
-
-        h1 { font-size: 28px; margin: 10px 0; letter-spacing: 2px; font-weight: 900; text-transform: uppercase; }
-        p { color: #888; font-size: 15px; margin-bottom: 35px; line-height: 1.4; }
+        .logo { 
+            width: 160px; 
+            height: 160px; 
+            margin-bottom: 20px; 
+            border-radius: 35px; 
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
+        }
+        h1 { font-size: 26px; margin: 10px 0; font-weight: 900; }
+        p { color: #888; font-size: 15px; margin-bottom: 35px; }
         
         .btn { 
             display: block;
             color: white; 
-            padding: 20px; 
-            border-radius: 18px; 
+            padding: 18px; 
+            border-radius: 16px; 
             text-decoration: none; 
             font-weight: 800; 
-            font-size: 16px;
-            transition: all 0.3s ease;
+            font-size: 15px;
+            transition: all 0.2s ease;
             text-transform: uppercase;
             margin-bottom: 15px;
+            border: none;
+            cursor: pointer;
         }
-
         .btn-v2ray { background: var(--primary); }
-        .btn-v2ray:hover { background: #0099ee; box-shadow: 0 0 20px rgba(0, 136, 204, 0.4); }
-
         .btn-hiddify { background: var(--hiddify); }
-        .btn-hiddify:hover { background: #ab47ff; box-shadow: 0 0 20px rgba(154, 51, 255, 0.4); }
+        .btn:active { transform: scale(0.96); opacity: 0.9; }
 
-        .btn:active { transform: scale(0.95); }
-
-        .footer-text { font-size: 13px; color: #444; margin-top: 25px; border-top: 1px solid #1a1a1a; padding-top: 20px; }
+        .footer { font-size: 13px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 20px; }
+        b { color: #666; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/180/000000/0088cc?text=RZN'">
-    <h1>RZN SERVICE</h1>
-    <p>Выберите приложение для автоматического импорта настроек</p>
+    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/160/0088cc/ffffff?text=RZN'">
+    <h1>ПОДКЛЮЧЕНИЕ</h1>
+    <p>Куда добавить настройки?</p>
     
-    <a id="v2rayBtn" href="#" class="btn btn-v2ray">🚀 V2RayTun (В2РЕЙ)</a>
-    <a id="hiddifyBtn" href="#" class="btn btn-hiddify">📱 Hiddify (ХАПП)</a>
+    <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 V2RayTun (В2РЕЙ)</a>
+    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Hiddify (ХАПП)</a>
 
-    <div class="footer-text">
-        Нужна помощь? <br> Пишите в поддержку: <b>@sasha_big_boss</b>
+    <div class="footer">
+        Тех. поддержка: <br> <b>@sasha_big_boss</b>
     </div>
 </div>
 
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const subUrl = urlParams.get('sub');
+    // Получаем ссылку на подписку из адреса
+    const params = new URLSearchParams(window.location.search);
+    const sub = params.get('sub');
 
-    if (subUrl) {
-        // Формируем ссылки для обоих приложений
-        document.getElementById('v2rayBtn').href = "v2raytun://import/" + subUrl;
-        document.getElementById('hiddifyBtn').href = "hiddify://import/" + subUrl;
+    if (sub) {
+        // Устанавливаем ссылки на кнопки
+        document.getElementById('v2Btn').href = "v2raytun://import/" + sub;
+        document.getElementById('hiBtn').href = "hiddify://import/" + sub;
     } else {
-        document.querySelector('p').innerText = "Ошибка: Ссылка на подписку не найдена. Перейдите из бота.";
-        document.getElementById('v2rayBtn').style.display = 'none';
-        document.getElementById('hiddifyBtn').style.display = 'none';
+        document.querySelector('p').innerText = "Ошибка: ссылка не найдена";
+        document.getElementById('v2Btn').style.display = 'none';
+        document.getElementById('hiBtn').style.display = 'none';
     }
+    // ВНИМАНИЕ: Здесь больше нет window.location.href = ..., 
+    // поэтому сайт САМ никуда не перекинет.
 </script>
 
 </body>
