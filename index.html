@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZN | Подключение</title>
     <style>
-        :root { --primary: #0088cc; --hiddify: #9a33ff; --bg: #000000; --card: #111111; }
+        :root { --primary: #0088cc; --happ: #ff4500; --bg: #000000; --card: #111111; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             background-color: var(--bg); 
@@ -55,7 +55,7 @@
             box-sizing: border-box;
         }
         .btn-v2ray { background: var(--primary); }
-        .btn-hiddify { background: var(--hiddify); }
+        .btn-happ { background: var(--happ); } /* Оранжевый стиль для HAPP */
         .btn:active { transform: scale(0.97); opacity: 0.8; }
 
         .store-section {
@@ -64,27 +64,29 @@
             border-top: 1px solid #222;
             display: none;
         }
-        .store-title { font-size: 13px; color: #666; margin-bottom: 15px; text-transform: uppercase; }
+        .store-title { font-size: 12px; color: #555; margin-bottom: 15px; text-transform: uppercase; }
         .store-links { display: flex; justify-content: space-around; gap: 10px; }
         .store-btn {
-            background: #222;
-            color: #eee;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 12px;
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 12px 10px;
+            border-radius: 12px;
+            font-size: 11px;
             text-decoration: none;
             flex: 1;
             border: 1px solid #333;
+            font-weight: 600;
         }
         .retry-btn {
             margin-top: 20px;
             color: var(--primary);
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
-            text-decoration: underline;
+            text-decoration: none;
             display: block;
+            opacity: 0.6;
         }
-        .footer { font-size: 12px; color: #444; margin-top: 25px; }
+        .footer { font-size: 12px; color: #444; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -92,15 +94,15 @@
 <div class="container">
     <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/140/0088cc/ffffff?text=RZN'">
     <h1>ПОДКЛЮЧЕНИЕ</h1>
-    <p id="main-desc">Выберите приложение для настройки</p>
+    <p id="main-desc">Выберите ваше приложение для автоматической настройки доступа</p>
     
     <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 Добавить в V2RayTun</a>
-    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Добавить в HAPP (Hiddify)</a>
+    <a id="happBtn" href="#" class="btn btn-happ">📱 Добавить в HAPP Proxy</a>
 
     <div id="storeSection" class="store-section">
-        <div class="store-title">Нет приложения? Установите:</div>
+        <div class="store-title">Если приложение не установлено:</div>
         <div class="store-links" id="storeLinks"></div>
-        <span class="retry-btn" onclick="location.reload()">Попробовать снова</span>
+        <span class="retry-btn" onclick="location.reload()">↺ Попробовать снова</span>
     </div>
 
     <div class="footer">Поддержка: <b>@sasha_big_boss</b></div>
@@ -111,31 +113,34 @@
     const sub = params.get('sub');
 
     if (sub) {
-        // ИСПРАВЛЕННЫЕ ПРОТОКОЛЫ
+        // Установка протоколов для импорта
         document.getElementById('v2Btn').href = "v2raytun://import/" + sub;
-        document.getElementById('hiBtn').href = "happ://add/" + sub; 
+        document.getElementById('happBtn').href = "happ://add/" + sub; 
     } else {
-        document.getElementById('main-desc').innerText = "Ошибка: ссылка не найдена";
+        document.getElementById('main-desc').innerText = "Ошибка: данные не получены";
         document.getElementById('v2Btn').style.display = 'none';
-        document.getElementById('hiBtn').style.display = 'none';
+        document.getElementById('happBtn').style.display = 'none';
     }
 
-    // Определение ОС
+    // Детектор ОС и ссылки на маркеты
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const storeSection = document.getElementById('storeSection');
     const storeLinks = document.getElementById('storeLinks');
 
-    setTimeout(() => { storeSection.style.display = 'block'; }, 1500);
+    // Показываем ссылки на установку через 2 секунды
+    setTimeout(() => { storeSection.style.display = 'block'; }, 2000);
 
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        // Ссылки для iOS
         storeLinks.innerHTML = `
-            <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn">App Store (V2)</a>
-            <a href="https://apps.apple.com/ru/app/hiddify/id6473773752" class="store-btn">App Store (Hi)</a>
+            <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn" target="_blank">App Store (V2)</a>
+            <a href="https://apps.apple.com/ru/app/happ-proxy/id6474143422" class="store-btn" target="_blank">App Store (HAPP)</a>
         `;
     } else {
+        // Ссылки для Android (HAPP обычно ставится через APK или Play Store, если доступен)
         storeLinks.innerHTML = `
-            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn">Google Play (V2)</a>
-            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="store-btn">Google Play (Hi)</a>
+            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn" target="_blank">Google Play (V2)</a>
+            <a href="https://play.google.com/store/apps/details?id=com.happ.proxy" class="store-btn" target="_blank">Google Play (HAPP)</a>
         `;
     }
 </script>
