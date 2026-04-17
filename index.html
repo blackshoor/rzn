@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RZN | Выбор приложения</title>
+    <title>RZN | Подключение</title>
     <style>
         :root { --primary: #0088cc; --hiddify: #9a33ff; --bg: #000000; --card: #111111; }
         body { 
-            font-family: 'Segoe UI', -apple-system, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             background-color: var(--bg); 
             color: white; 
             margin: 0; 
@@ -19,77 +19,131 @@
         .container { 
             text-align: center; 
             background: var(--card); 
-            padding: 50px 30px; 
-            border-radius: 40px; 
-            box-shadow: 0 10px 50px rgba(0, 136, 204, 0.2);
-            max-width: 380px;
+            padding: 40px 25px; 
+            border-radius: 35px; 
+            box-shadow: 0 15px 50px rgba(0, 136, 204, 0.2);
+            max-width: 400px;
             width: 90%;
             border: 1px solid #222;
         }
         .logo { 
-            width: 160px; 
-            height: 160px; 
+            width: 140px; 
+            height: 140px; 
             margin-bottom: 20px; 
-            border-radius: 35px; 
+            border-radius: 30px; 
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
         }
-        h1 { font-size: 26px; margin: 10px 0; font-weight: 900; }
-        p { color: #888; font-size: 15px; margin-bottom: 35px; }
+        h1 { font-size: 24px; margin: 10px 0; font-weight: 800; text-transform: uppercase; }
+        p { color: #888; font-size: 14px; margin-bottom: 30px; line-height: 1.5; }
         
         .btn { 
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white; 
             padding: 18px; 
             border-radius: 16px; 
             text-decoration: none; 
-            font-weight: 800; 
+            font-weight: 700; 
             font-size: 15px;
             transition: all 0.2s ease;
             text-transform: uppercase;
-            margin-bottom: 15px;
-            border: none;
-            cursor: pointer;
+            margin-bottom: 12px;
         }
         .btn-v2ray { background: var(--primary); }
         .btn-hiddify { background: var(--hiddify); }
-        .btn:active { transform: scale(0.96); opacity: 0.9; }
+        .btn:active { transform: scale(0.97); opacity: 0.8; }
 
-        .footer { font-size: 13px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 20px; }
-        b { color: #666; }
+        .store-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            display: none; /* Скрыто по умолчанию, покажем через JS */
+        }
+        .store-title { font-size: 13px; color: #666; margin-bottom: 15px; text-transform: uppercase; }
+        .store-links { display: flex; justify-content: space-around; gap: 10px; }
+        .store-btn {
+            background: #222;
+            color: #eee;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            text-decoration: none;
+            flex: 1;
+            border: 1px solid #333;
+        }
+        .retry-btn {
+            margin-top: 20px;
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            display: block;
+        }
+        .footer { font-size: 12px; color: #444; margin-top: 25px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/160/0088cc/ffffff?text=RZN'">
+    <img src="logo.png" alt="RZN" class="logo" onerror="this.src='https://via.placeholder.com/140/0088cc/ffffff?text=RZN'">
     <h1>ПОДКЛЮЧЕНИЕ</h1>
-    <p>Куда добавить настройки?</p>
+    <p id="main-desc">Выберите приложение для автоматического добавления конфигурации</p>
     
-    <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 V2RayTun (В2РЕЙ)</a>
-    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Hiddify (ХАПП)</a>
+    <a id="v2Btn" href="#" class="btn btn-v2ray">🚀 Добавить в V2RayTun</a>
+    <a id="hiBtn" href="#" class="btn btn-hiddify">📱 Добавить в Hiddify</a>
 
-    <div class="footer">
-        Тех. поддержка: <br> <b>@sasha_big_boss</b>
+    <div id="storeSection" class="store-section">
+        <div class="store-title">Нет приложения? Установите:</div>
+        <div class="store-links" id="storeLinks">
+            </div>
+        <span class="retry-btn" onclick="location.reload()">Попробовать снова</span>
     </div>
+
+    <div class="footer">Тех. поддержка: <b>@sasha_big_boss</b></div>
 </div>
 
 <script>
-    // Получаем ссылку на подписку из адреса
     const params = new URLSearchParams(window.location.search);
     const sub = params.get('sub');
 
+    // Настройка ссылок импорта
     if (sub) {
-        // Устанавливаем ссылки на кнопки
         document.getElementById('v2Btn').href = "v2raytun://import/" + sub;
         document.getElementById('hiBtn').href = "hiddify://import/" + sub;
     } else {
-        document.querySelector('p').innerText = "Ошибка: ссылка не найдена";
+        document.getElementById('main-desc').innerText = "Ошибка: ссылка не найдена";
         document.getElementById('v2Btn').style.display = 'none';
         document.getElementById('hiBtn').style.display = 'none';
     }
-    // ВНИМАНИЕ: Здесь больше нет window.location.href = ..., 
-    // поэтому сайт САМ никуда не перекинет.
+
+    // Определение ОС и показ ссылок на Маркеты
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const storeSection = document.getElementById('storeSection');
+    const storeLinks = document.getElementById('storeLinks');
+
+    // Показываем блок с маркетами через небольшую задержку
+    setTimeout(() => {
+        storeSection.style.display = 'block';
+    }, 1000);
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        // iOS Ссылки
+        storeLinks.innerHTML = `
+            <a href="https://apps.apple.com/ru/app/v2raytun/id6470773935" class="store-btn" target="_blank">App Store (V2)</a>
+            <a href="https://apps.apple.com/ru/app/hiddify/id6473773752" class="store-btn" target="_blank">App Store (Hi)</a>
+        `;
+    } else if (/android/i.test(userAgent)) {
+        // Android Ссылки
+        storeLinks.innerHTML = `
+            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" class="store-btn" target="_blank">Google Play (V2)</a>
+            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="store-btn" target="_blank">Google Play (Hi)</a>
+        `;
+    } else {
+        // Десктоп или другое
+        storeLinks.innerHTML = `<span>Пожалуйста, откройте ссылку с телефона</span>`;
+    }
 </script>
 
 </body>
